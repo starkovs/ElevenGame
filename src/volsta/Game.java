@@ -9,6 +9,7 @@ import elevengame.DataStore;
 import elevengame.GameInterface;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -154,6 +155,7 @@ public class Game implements GameInterface {
     
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         Game g = new Game();
         System.out.println(g.getName());
         Deck d = new Deck();
@@ -162,11 +164,17 @@ public class Game implements GameInterface {
 
         System.out.println(g.getDeckSize());
         System.out.println(g.getCardDescriptionAt(0));
-        
+        List<Integer> iSelectedCards = new ArrayList<>();
         while (!table.isEmpty()) {
             try {
                 System.out.print(display());
-                // metoda, ve ktere uzivatel napise počet vybraných karet a poté jejich cisla 
+                // metoda, ve ktere uzivatel napise počet vybraných karet a poté jejich cisla
+                int count = sc.nextInt();
+                for (int i=0; i<count;i++){
+                    iSelectedCards.add(sc.nextInt());
+                }
+                //g.playAndReplace(iSelectedCards)
+                
             } catch (Exception e) {
                 System.out.print(e.getMessage());
             }
