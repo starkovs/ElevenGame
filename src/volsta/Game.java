@@ -9,6 +9,8 @@ import elevengame.DataStore;
 import elevengame.GameInterface;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Game implements GameInterface {
 
@@ -78,12 +80,20 @@ public class Game implements GameInterface {
             return false;
         }
         if (count == 2) {
-            if ((table.get(0).getPoints() + table.get(1).getPoints()) == 11) {
+            if ((table.get(iSelectedCards.get(0)).getPoints() + table.get(iSelectedCards.get(1)).getPoints()) == 11) {
                 //replace those cards by new cards from the deck
-//                table.remove(0);
-//                table.add(0, deck.pick(1));
-//                table.remove(1);
-//                table.add(1, deck.pick(1));
+                table.remove(iSelectedCards.get(0));
+                try {
+                    table.add(iSelectedCards.get(0), deck.pick());
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                table.remove(iSelectedCards.get(1));
+                try {
+                    table.add(iSelectedCards.get(1), deck.pick());
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 return true;
             } else {
                 return false;
@@ -96,7 +106,24 @@ public class Game implements GameInterface {
             }
             if (triple.equals(DataStore.getTriple())) {
                 //replace those cards by new cards from the deck
-                //table.remove();
+                table.remove(iSelectedCards.get(0));
+                try {
+                    table.add(iSelectedCards.get(1), deck.pick());
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                table.remove(iSelectedCards.get(1));
+                try {
+                    table.add(iSelectedCards.get(1), deck.pick());
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                table.remove(iSelectedCards.get(2));
+                try {
+                    table.add(iSelectedCards.get(1), deck.pick());
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 return true;
             } else {
                 return false;
