@@ -19,9 +19,9 @@ public class Card {
     private final int points;
 
     /**
-     * @param value
-     * @param symbol
-     * @param points
+     * @param value - value of card
+     * @param symbol - symbol of card
+     * @param points - points of card
      */
     public Card(String symbol, String value, int points) {
         this.value = value;
@@ -61,7 +61,11 @@ public class Card {
         return symbol + "-" + value;
     }
 
-    public static ArrayList<Card> allCards() {
+    /**
+     * Creates list of all possible cards 
+     * @return List of cards
+     */
+    public static ArrayList<Card> allCards() {  
         ArrayList<Card> list = new ArrayList<>();
         String[] values = DataStore.loadValues();
         int[] points = DataStore.loadNPoints();
@@ -70,8 +74,8 @@ public class Card {
             for (int i = 0; i < values.length; i++) {
                 list.add(new Card(symbol, values[i], points[i]));
             }
-            
         }
+
         return list;
     }
 

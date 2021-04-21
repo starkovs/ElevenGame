@@ -17,57 +17,53 @@ public class Deck {
 
     private ArrayList<Card> cards;
 
-    public static Deck initFull() {
-        return new Deck();
-    }
-
     public Deck() {
         this.cards = Card.allCards();
         Collections.shuffle(cards);
     }
 
     /**
-     * Is deck empty?
-     *
-     * @return
-     */
-    public boolean isEmpty() {
-        return this.cards.isEmpty();
-    }
-    
-    /**
      * Returns size of deck
-     * @return 
+     * @return size of deck
      */
     public int getSize(){
         return this.cards.size();
     }
 
     /**
-     * Picks specific amount of cards
-     * @param count
-     * @return
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException 
+     * Is deck empty?
+     * @return true if empty
      */
-   public ArrayList<Card> pick(Integer count) throws IllegalAccessException, IllegalArgumentException {
-      if (count < 1) {
-         throw new IllegalArgumentException("you cannot pick " + count + " card");
-      }
-      
-      ArrayList<Card> picked = new ArrayList<>();
+    public boolean isEmpty() {
+        return this.cards.isEmpty();
+    }
 
-      for(int i = 0; i < count; i++) {
-         picked.add(pick());
-      }
+    /**
+     * Picks specific amount of cards
+     * @param count - number of cards
+     * @return array of cards
+     * @throws IllegalAccessException - deck is empty
+     * @throws IllegalArgumentException - count is <1 or >size of deck
+     */
+    public Card[] pick(int count) throws IllegalAccessException, IllegalArgumentException {
+        //Checks if number of cards taken is valid
+        if (count < 1 || count > cards.size()) {
+            throw new IllegalArgumentException("You can not pick " + count + " cards");
+        }
 
-      return picked;
-   }
+        Card[] picked = new Card[count];
+
+        for (int i = 0; i < count; i++) {
+            picked[i] = pick();
+        }
+
+        return picked;
+    }
 
     /**
      * Picks card at index
-     * @return
-     * @throws IllegalAccessException 
+     * @return Card
+     * @throws IllegalAccessException - deck is empty
      */
     public Card pick() throws IllegalAccessException {
         if (isEmpty()) {
@@ -78,5 +74,13 @@ public class Deck {
         cards.remove(0);
 
         return card;
+    }
+
+    /**
+     * Returns new instance of Deck
+     * @return Deck
+     */
+    public static Deck initFull() {
+        return new Deck();
     }
 }
